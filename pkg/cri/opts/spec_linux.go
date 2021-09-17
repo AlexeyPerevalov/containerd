@@ -392,18 +392,6 @@ func WithCapabilities(sc *runtime.LinuxContainerSecurityContext, allCaps []strin
 	return oci.Compose(opts...)
 }
 
-// WithoutAmbientCaps removes the ambient caps from the spec
-func WithoutAmbientCaps(_ context.Context, _ oci.Client, c *containers.Container, s *runtimespec.Spec) error {
-	if s.Process == nil {
-		s.Process = &runtimespec.Process{}
-	}
-	if s.Process.Capabilities == nil {
-		s.Process.Capabilities = &runtimespec.LinuxCapabilities{}
-	}
-	s.Process.Capabilities.Ambient = nil
-	return nil
-}
-
 // WithDisabledCgroups clears the Cgroups Path from the spec
 func WithDisabledCgroups(_ context.Context, _ oci.Client, c *containers.Container, s *runtimespec.Spec) error {
 	if s.Linux == nil {
