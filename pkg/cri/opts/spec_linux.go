@@ -388,6 +388,13 @@ func WithCapabilities(sc *runtime.LinuxContainerSecurityContext, allCaps []strin
 		caps = append(caps, "CAP_"+strings.ToUpper(c))
 	}
 	opts = append(opts, oci.WithDroppedCapabilities(caps))
+
+	caps = []string{}
+	for _, c := range capabilities.GetAddAmbientCapabilities() {
+		caps = append(caps, "CAP_"+strings.ToUpper(c))
+	}
+	opts = append(opts, oci.WithAmbientCapabilities(caps))
+
 	return oci.Compose(opts...)
 }
 
